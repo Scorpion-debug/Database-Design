@@ -8,28 +8,36 @@ on:
 jobs:
   setup_mysql:
     runs-on: ubuntu-latest
-    
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
-      - name: Set up MySQL container
-        uses: docker://mysql:8.0
-        with:
-          args: --default-authentication-plugin=mysql_native_password
-          
+
       - name: Wait for MySQL to start
         run: |
-          sleep 10
-        
+          sleep 15
+
       - name: Create database and run SQL scripts
         run: |
-          mysql -u root -e "CREATE DATABASE IF NOT EXISTS bookstore;"
-          mysql -u root bookstore < ./answers.sql
+          mysql -h 127.0.0.1 -u root -e "CREATE DATABASE IF NOT EXISTS bookstore;"
+          mysql -h 127.0.0.1 -u root bookstore < ./answers.sql
 
       - name: Run basic query to test database
         run: |
-          result=$(mysql -u root -e "SELECT COUNT(*) FROM book;" bookstore)
+          result=$(mysql -h 127.0.0.1 -u root -e "SELECT COUNT(*) FROM book;" bookstore)
           echo "Book count: $result"
           if [[ $result != *'2'* ]]; then
             echo "Test failed: Unexpected book count!"
@@ -38,13 +46,6 @@ jobs:
 
       - name: Run additional queries (optional)
         run: |
-          result=$(mysql -u root -e "SELECT * FROM book LIMIT 1;" bookstore)
+          result=$(mysql -h 127.0.0.1 -u root -e "SELECT * FROM book LIMIT 1;" bookstore)
           echo "First book: $result"
 
-
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
