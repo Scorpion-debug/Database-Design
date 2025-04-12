@@ -1,0 +1,50 @@
+name: Test SQL Scripts
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  setup_mysql:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Set up MySQL container
+        uses: docker://mysql:8.0
+        with:
+          args: --default-authentication-plugin=mysql_native_password
+          
+      - name: Wait for MySQL to start
+        run: |
+          sleep 10
+        
+      - name: Create database and run SQL scripts
+        run: |
+          mysql -u root -e "CREATE DATABASE IF NOT EXISTS bookstore;"
+          mysql -u root bookstore < ./answers.sql
+
+      - name: Run basic query to test database
+        run: |
+          result=$(mysql -u root -e "SELECT COUNT(*) FROM book;" bookstore)
+          echo "Book count: $result"
+          if [[ $result != *'2'* ]]; then
+            echo "Test failed: Unexpected book count!"
+            exit 1
+          fi
+
+      - name: Run additional queries (optional)
+        run: |
+          result=$(mysql -u root -e "SELECT * FROM book LIMIT 1;" bookstore)
+          echo "First book: $result"
+
+
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
