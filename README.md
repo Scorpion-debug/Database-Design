@@ -132,10 +132,3 @@ WHERE os.status_name = 'Shipped';
 - Mary Mbithe
 
 ```
-
----
-
-### Key Points:
-1. **`README.md`** provides clear instructions on setting up the database locally, running the SQL scripts, and verifying the setup.
-2. **CI/CD Setup** is explained, including how GitHub Actions tests your SQL script automatically on each push.
-3. **Queries Section** shows examples of different queries to test and interact with the database.
