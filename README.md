@@ -56,15 +56,6 @@ The goal is to design and implement a relational database using MySQL, structure
 - **CI/CD Fixes**: Resolved `ERROR 1064` (role syntax) and ensured `book` table has 2 books to pass GitHub Actions test.
 - **ERD**: Provided a detailed ERD schema (available as `./ERD.png`) showing all relationships.
 
-## How to Set Up the Database Locally
-
-### 1. Create a MySQL Database
-
-Run the following command to create the database:
-
-```bash
-mysql -h 127.0.0.1 -u root -e "CREATE DATABASE IF NOT EXISTS bookstore;"
-
 ## Authors
 
 - Fredrick Maeba
