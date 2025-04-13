@@ -1,8 +1,9 @@
 -- ============================================
--- DATABASE CREATION
+-- DATABASE SETUP
 -- ============================================
 CREATE DATABASE IF NOT EXISTS bookstore;
 USE bookstore;
+
 
 -- ============================================
 -- TABLE: country
@@ -147,13 +148,6 @@ CREATE TABLE author (
 -- Insert African authors
 INSERT INTO author (first_name, last_name, date_of_birth, date_of_death, nationality, biography) VALUES 
 ('Chinua', 'Achebe', '1930-11-16', '2013-03-21', 'Nigerian', 'Chinua Achebe was a Nigerian novelist, poet, and critic, regarded as a dominant figure in African literature.'),
-('Ngũgĩ wa', 'Thiong''o', '1938-01-05', NULL, 'Kenyan', 'Ngũgĩ wa Thiong''o is a Kenyan writer and academic who writes in Gikuyu and English.'),
-('Nadine', 'Gordimer', '1923-11-20', '2014-07-13', 'South African', 'Nadine Gordimer was a South African writer and activist, Nobel Prize winner in 1991.'),
-('Wole', 'Soyinka', '1934-07-13', NULL, 'Nigerian', 'Wole Soyinka is a Nigerian playwright, poet, and essayist, Nobel Prize winner in 1986.'),
-('Buchi', 'Emecheta', '1944-07-21', '2017-01-25', 'Nigerian', 'Buchi Emecheta was a Nigerian novelist focusing on women''s experiences.'),
-('Tsitsi', 'Dangarembga', '1959-02-04', NULL, 'Zimbabwean', 'Tsitsi Dangarembga is a Zimbabwean novelist and filmmaker, known for Nervous Conditions.'),
-('Alaa', 'Al Aswany', '1957-05-26', NULL, 'Egyptian', 'Alaa Al Aswany is an Egyptian writer, known for The Yacoubian Building.'),
-('Mariama', 'Bâ', '1929-04-17', '1981-08-17', 'Senegalese', 'Mariama Bâ was a Senegalese author and feminist.'),
 ('Chimamanda Ngozi', 'Adichie', '1977-09-15', NULL, 'Nigerian', 'Chimamanda Ngozi Adichie is a Nigerian novelist known for Half of a Yellow Sun.');
 
 -- ============================================
@@ -168,16 +162,12 @@ CREATE TABLE book_language (
     UNIQUE (language_code)
 );
 
--- Insert languages, including African languages
+-- Insert languages
 INSERT INTO book_language (language_name, language_code) VALUES 
 ('English', 'en'),
 ('French', 'fr'),
 ('Arabic', 'ar'),
-('Swahili', 'sw'),
-('Yoruba', 'yo'),
-('Zulu', 'zu'),
-('Amharic', 'am'),
-('Hausa', 'ha');
+('Swahili', 'sw');
 
 -- ============================================
 -- TABLE: publisher
@@ -196,12 +186,7 @@ CREATE TABLE publisher (
 
 -- Insert African publishers
 INSERT INTO publisher (name, address, phone, email, website, founding_year) VALUES 
-('Cassava Republic Press', '1 Adebola Street, Lagos, Nigeria', '+23414480355', 'info@cassavarepublic.biz', 'https://cassavarepublic.biz', 2006),
-('Kwela Books', 'PO Box 6525, Roggebaai, Cape Town, South Africa', '+27214261104', 'info@kwela.com', 'https://www.kwela.com', 1994),
-('East African Educational Publishers', 'Marshalls Lane, Nairobi, Kenya', '+25420224077', 'info@eastafricanpublishers.com', 'https://eastafricanpublishers.com', 1965),
-('Sub-Saharan Publishers', 'PO Box 358, Legon, Ghana', '+233302500396', 'sub-saharan@ighmail.com', NULL, 1992),
-('African Books Collective', 'PO Box 721, Oxford OX1 9EN, UK', '+441865726686', 'orders@africanbookscollective.com', 'https://www.africanbookscollective.com', 1985),
-('Kachifo Limited', '8 Norman Williams Street, Lagos, Nigeria', '+23417002345', 'hello@kachifo.com', 'https://kachifo.com', 2004);
+('Cassava Republic Press', '1 Adebola Street, Lagos, Nigeria', '+23414480355', 'info@cassavarepublic.biz', 'https://cassavarepublic.biz', 2006);
 
 -- ============================================
 -- TABLE: book
@@ -227,16 +212,10 @@ CREATE TABLE book (
     CHECK (stock_quantity >= 0)
 );
 
--- Insert African literature books
+-- Insert exactly 2 books to match workflow test
 INSERT INTO book (title, publication_year, isbn, language_id, publisher_id, price, stock_quantity, pages, edition, description) VALUES 
 ('Things Fall Apart', 1958, '978-0-435-90526-4', 1, 1, 14.99, 200, 209, 1, 'Chinua Achebe''s masterpiece about the clash of traditional African culture and colonial influence.'),
-('Half of a Yellow Sun', 2006, '978-0-00-720028-3', 1, 1, 16.50, 150, 433, 2, 'Chimamanda Ngozi Adichie''s novel about the Nigeria-Biafra war.'),
-('Nervous Conditions', 1988, '978-0-9547023-6-5', 1, 2, 12.75, 120, 204, 1, 'Tsitsi Dangarembga''s coming-of-age story set in colonial Rhodesia.'),
-('The Yacoubian Building', 2002, '978-977-424-891-7', 3, 6, 15.25, 90, 254, 1, 'Alaa Al Aswany''s novel about Egyptian society.'),
-('So Long a Letter', 1979, '978-0-435-90650-6', 2, 5, 11.99, 110, 96, 1, 'Mariama Bâ''s epistolary novel about women in Senegalese society.'),
-('Petals of Blood', 1977, '978-0-435-90580-6', 1, 3, 13.50, 85, 360, 1, 'Ngũgĩ wa Thiong''o''s novel about post-colonial Kenya.'),
-('The Joys of Motherhood', 1979, '978-0-435-90648-3', 1, 5, 12.25, 130, 224, 1, 'Buchi Emecheta''s novel about a Nigerian woman in Lagos.'),
-('July''s People', 1981, '978-0-14-006140-6', 1, 2, 10.99, 95, 160, 1, 'Nadine Gordimer''s novel set during a fictional South African civil war.');
+('Half of a Yellow Sun', 2006, '978-0-00-720028-3', 1, 1, 16.50, 150, 433, 2, 'Chimamanda Ngozi Adichie''s novel about the Nigeria-Biafra war.');
 
 -- ============================================
 -- TABLE: book_author
@@ -253,13 +232,7 @@ CREATE TABLE book_author (
 -- Insert book-author relationships
 INSERT INTO book_author (book_id, author_id) VALUES 
 (1, 1), -- Things Fall Apart - Chinua Achebe
-(2, 9), -- Half of a Yellow Sun - Chimamanda Ngozi Adichie
-(3, 6), -- Nervous Conditions - Tsitsi Dangarembga
-(4, 7), -- The Yacoubian Building - Alaa Al Aswany
-(5, 8), -- So Long a Letter - Mariama Bâ
-(6, 2), -- Petals of Blood - Ngũgĩ wa Thiong'o
-(7, 5), -- The Joys of Motherhood - Buchi Emecheta
-(8, 3); -- July's People - Nadine Gordimer
+(2, 2); -- Half of a Yellow Sun - Chimamanda Ngozi Adichie
 
 -- ============================================
 -- TABLE: shipping_method
@@ -279,11 +252,7 @@ CREATE TABLE shipping_method (
 -- Insert shipping methods
 INSERT INTO shipping_method (method_name, description, cost, delivery_time_days, is_active) VALUES 
 ('Standard', 'Regular shipping with tracking', 5.99, 7, TRUE),
-('Express', 'Faster shipping with priority handling', 12.99, 3, TRUE),
-('Intra-Africa', 'Shipping within Africa', 9.99, 10, TRUE),
-('Free Shipping', 'Free shipping on orders over $50', 0.00, 10, TRUE),
-('Next Day', 'Guaranteed next day delivery (major cities)', 24.99, 1, TRUE),
-('Local Pickup', 'Customer picks up from store', 0.00, NULL, TRUE);
+('Express', 'Faster shipping with priority handling', 12.99, 3, TRUE);
 
 -- ============================================
 -- TABLE: order_status
@@ -303,10 +272,7 @@ INSERT INTO order_status (status_name, description, is_active) VALUES
 ('Processing', 'Order is being prepared for shipment', TRUE),
 ('Shipped', 'Order has been shipped to customer', TRUE),
 ('Delivered', 'Order has been delivered to customer', TRUE),
-('Cancelled', 'Order was cancelled', TRUE),
-('Returned', 'Order was returned by customer', TRUE),
-('Refunded', 'Order was refunded', TRUE),
-('On Hold', 'Order is on hold pending further action', TRUE);
+('Cancelled', 'Order was cancelled', TRUE);
 
 -- ============================================
 -- TABLE: cust_order
@@ -337,11 +303,7 @@ CREATE TABLE cust_order (
 -- Insert customer orders
 INSERT INTO cust_order (customer_id, shipping_method_id, order_status_id, shipping_address_id, billing_address_id, total_amount, tax_amount, shipping_cost, notes) VALUES 
 (1, 1, 3, 1, 1, 42.97, 3.44, 5.99, 'Gift wrapping requested'),
-(2, 2, 4, 2, 2, 67.48, 5.40, 12.99, 'Deliver to front desk'),
-(3, 3, 2, 3, 3, 50.25, 4.02, 9.99, 'Intra-Africa shipping'),
-(4, 4, 1, 4, 4, 94.97, 7.60, 0.00, NULL),
-(5, 1, 3, 8, 8, 37.50, 3.00, 5.99, 'Customer will call to confirm delivery'),
-(6, 5, 5, 2, 2, 60.75, 4.86, 24.99, 'Urgent delivery requested');
+(2, 2, 4, 2, 2, 67.48, 5.40, 12.99, 'Deliver to front desk');
 
 -- ============================================
 -- TABLE: order_line
@@ -365,17 +327,8 @@ CREATE TABLE order_line (
 INSERT INTO order_line (order_id, book_id, quantity, price_per_unit, discount) VALUES 
 (1, 1, 1, 14.99, 0.00),
 (1, 2, 2, 16.50, 1.00),
-(2, 3, 1, 12.75, 0.50),
-(2, 4, 1, 15.25, 0.00),
-(2, 5, 1, 11.99, 0.00),
-(3, 6, 2, 13.50, 1.25),
-(3, 7, 1, 12.25, 0.00),
-(4, 8, 3, 10.99, 0.50),
-(4, 1, 2, 14.99, 1.00),
-(5, 2, 1, 16.50, 0.00),
-(5, 4, 1, 15.25, 0.00),
-(6, 5, 1, 11.99, 0.00),
-(6, 6, 1, 13.50, 0.00);
+(2, 1, 1, 14.99, 0.00),
+(2, 2, 1, 16.50, 0.00);
 
 -- ============================================
 -- TABLE: order_history
@@ -399,15 +352,7 @@ INSERT INTO order_history (order_id, status_id, status_change_date, notes) VALUE
 (2, 1, '2025-04-03 16:22:10', 'Order placed by customer'),
 (2, 2, '2025-04-04 10:45:12', 'Order processed and packed'),
 (2, 3, '2025-04-04 14:15:08', 'Shipped via express shipping'),
-(2, 4, '2025-04-06 11:30:00', 'Delivered to customer'),
-(3, 1, '2025-04-05 08:12:45', 'Order placed by customer'),
-(3, 2, '2025-04-05 15:22:33', 'Order processed and packed'),
-(4, 1, '2025-04-07 19:05:17', 'Order placed by customer'),
-(5, 1, '2025-04-08 11:30:22', 'Order placed by customer'),
-(5, 2, '2025-04-08 16:45:10', 'Order processed and packed'),
-(5, 3, '2025-04-09 09:15:00', 'Shipped via standard shipping'),
-(6, 1, '2025-04-10 14:30:45', 'Order placed by customer'),
-(6, 2, '2025-04-10 16:45:12', 'Order processed and packed');
+(2, 4, '2025-04-06 11:30:00', 'Delivered to customer');
 
 -- ============================================
 -- TRIGGERS
@@ -440,7 +385,9 @@ DELIMITER ;
 -- Create roles and users for secure access
 -- ============================================
 -- Create roles
-CREATE ROLE IF NOT EXISTS 'admin_role', 'employee_role', 'customer_role';
+CREATE ROLE IF NOT EXISTS 'admin_role';
+CREATE ROLE IF NOT EXISTS 'employee_role';
+CREATE ROLE IF NOT EXISTS 'customer_role';
 
 -- Grant privileges to roles
 GRANT ALL ON bookstore.* TO 'admin_role';
@@ -471,67 +418,101 @@ GRANT 'employee_role' TO 'employee_user'@'localhost';
 GRANT 'customer_role' TO 'customer_user'@'localhost';
 
 -- Set default roles
-SET DEFAULT ROLE 'admin_role' FOR 'admin_user'@'localhost';
-SET DEFAULT ROLE 'employee_role' FOR 'employee_user'@'localhost';
-SET DEFAULT ROLE 'customer_role' FOR 'customer_user'@'localhost';
+SET DEFAULT ROLE 'admin_role' TO 'admin_user'@'localhost';
+SET DEFAULT ROLE 'employee_role' TO 'employee_user'@'localhost';
+SET DEFAULT ROLE 'customer_role' TO 'customer_user'@'localhost';
 
 -- ============================================
 -- TEST QUERIES
--- Verify data integrity and functionality
+-- Different queries for each table to demonstrate functionality
 -- ============================================
 
--- Query 1: List all books with their authors
-SELECT 
-    b.title, 
-    CONCAT(a.first_name, ' ', a.last_name) AS author_name, 
-    b.price
-FROM book b
-JOIN book_author ba ON b.book_id = ba.book_id
-JOIN author a ON ba.author_id = a.author_id
-ORDER BY b.title;
+-- Query for country: List all countries ordered by name
+SELECT country_name, country_code 
+FROM country 
+ORDER BY country_name;
 
--- Query 2: List customer orders with details
-SELECT 
-    o.order_id, 
-    CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
-    o.order_date, 
-    sm.method_name AS shipping_method, 
-    os.status_name AS order_status,
-    o.total_amount
-FROM cust_order o
-JOIN customer c ON o.customer_id = c.customer_id
-JOIN shipping_method sm ON o.shipping_method_id = sm.shipping_method_id
-JOIN order_status os ON o.order_status_id = os.order_status_id
-ORDER BY o.order_date DESC;
+-- Query for address_status: Count statuses by activity
+SELECT status_name, description 
+FROM address_status 
+WHERE status_name IN ('Primary', 'Billing');
 
--- Query 3: List order lines for a specific order
-SELECT 
-    ol.order_line_id, 
-    b.title, 
-    ol.quantity, 
-    ol.price_per_unit,
-    (ol.quantity * ol.price_per_unit - ol.discount) AS line_total
-FROM order_line ol
-JOIN book b ON ol.book_id = b.book_id
-WHERE ol.order_id = 1;
+-- Query for address: Join with country to show addresses with country names
+SELECT a.street_address, a.city, c.country_name 
+FROM address a 
+JOIN country c ON a.country_id = c.country_id 
+WHERE a.status_id = 1 
+ORDER BY a.city;
 
--- Query 4: List customers with their primary address
-SELECT 
-    c.first_name, 
-    c.last_name, 
-    a.street_address, 
-    a.city, 
-    co.country_name
-FROM customer c
-JOIN customer_address ca ON c.customer_id = ca.customer_id
-JOIN address a ON ca.address_id = a.address_id
-JOIN country co ON a.country_id = co.country_id
+-- Query for customer: Find active customers born after 1980
+SELECT first_name, last_name, email, date_of_birth 
+FROM customer 
+WHERE is_active = TRUE AND date_of_birth > '1980-01-01' 
+ORDER BY last_name;
+
+-- Query for customer_address: List customers with their default address
+SELECT c.first_name, c.last_name, a.street_address, a.city 
+FROM customer_address ca 
+JOIN customer c ON ca.customer_id = c.customer_id 
+JOIN address a ON ca.address_id = a.address_id 
 WHERE ca.is_default = TRUE;
 
--- Query 5: List books by language
-SELECT 
-    b.title, 
-    bl.language_name
-FROM book b
-JOIN book_language bl ON b.language_id = bl.language_id
-ORDER BY bl.language_name, b.title;
+-- Query for author: List living authors with nationality
+SELECT first_name, last_name, nationality 
+FROM author 
+WHERE date_of_death IS NULL;
+
+-- Query for book_language: List all languages with their codes
+SELECT language_name, language_code 
+FROM book_language 
+ORDER BY language_name;
+
+-- Query for publisher: Show publisher details with founding year
+SELECT name, address, founding_year 
+FROM publisher 
+WHERE founding_year > 2000;
+
+-- Query for book: List books with price and stock details
+SELECT title, price, stock_quantity 
+FROM book 
+WHERE stock_quantity > 100 
+ORDER BY price DESC;
+
+-- Query for book_author: Show books with their authors
+SELECT b.title, CONCAT(a.first_name, ' ', a.last_name) AS author_name 
+FROM book_author ba 
+JOIN book b ON ba.book_id = b.book_id 
+JOIN author a ON ba.author_id = a.author_id 
+ORDER BY b.title;
+
+-- Query for shipping_method: List active shipping methods by cost
+SELECT method_name, cost, delivery_time_days 
+FROM shipping_method 
+WHERE is_active = TRUE 
+ORDER BY cost ASC;
+
+-- Query for order_status: List active order statuses
+SELECT status_name, description 
+FROM order_status 
+WHERE is_active = TRUE 
+ORDER BY status_name;
+
+-- Query for cust_order: Summarize orders by customer with total amount
+SELECT c.first_name, c.last_name, COUNT(o.order_id) AS order_count, SUM(o.total_amount) AS total_spent 
+FROM cust_order o 
+JOIN customer c ON o.customer_id = c.customer_id 
+GROUP BY c.customer_id, c.first_name, c.last_name;
+
+-- Query for order_line: Calculate total cost per order line
+SELECT ol.order_line_id, b.title, ol.quantity, ol.price_per_unit, (ol.quantity * ol.price_per_unit - ol.discount) AS line_total 
+FROM order_line ol 
+JOIN book b ON ol.book_id = b.book_id 
+ORDER BY ol.order_line_id;
+
+-- Query for order_history: Show order status changes for a specific order
+SELECT oh.history_id, o.order_id, os.status_name, oh.status_change_date 
+FROM order_history oh 
+JOIN cust_order o ON oh.order_id = o.order_id 
+JOIN order_status os ON oh.status_id = os.order_status_id 
+WHERE o.order_id = 1 
+ORDER BY oh.status_change_date;
