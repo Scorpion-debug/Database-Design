@@ -13,15 +13,18 @@ CREATE TABLE country (
     country_code VARCHAR(3) NOT NULL
 );
 
--- Insert realistic country data
+-- Insert African countries data
 INSERT INTO country (country_name, country_code) VALUES 
-('United States', 'US'),
-('Canada', 'CA'),
-('United Kingdom', 'UK'),
-('Australia', 'AU'),
-('Germany', 'DE'),
-('France', 'FR'),
-('Japan', 'JP');
+('Nigeria', 'NG'),
+('South Africa', 'ZA'),
+('Kenya', 'KE'),
+('Ghana', 'GH'),
+('Egypt', 'EG'),
+('Ethiopia', 'ET'),
+('Morocco', 'MA'),
+('Senegal', 'SN'),
+('Tanzania', 'TZ'),
+('Uganda', 'UG');
 
 -- Select from country
 SELECT * FROM country;
@@ -63,16 +66,19 @@ CREATE TABLE address (
     FOREIGN KEY (status_id) REFERENCES address_status(status_id)
 );
 
--- Insert realistic address data
+-- Insert African address data
 INSERT INTO address (street_address, city, state, postal_code, country_id, status_id)
 VALUES 
-('1250 Broadway', 'New York', 'NY', '10001', 1, 1),
-('350 Victoria St', 'Toronto', 'ON', 'M5B 2K3', 2, 1),
-('1 Chome-1-2 Oshiage', 'Sumida City', 'Tokyo', '131-0045', 7, 1),
-('96 Euston Rd', 'London', NULL, 'NW1 2DB', 3, 1),
-('151 Bloor St W', 'Toronto', 'ON', 'M5S 1S4', 2, 2),
-('221B Baker St', 'London', NULL, 'NW1 6XE', 3, 3),
-('1600 Amphitheatre Parkway', 'Mountain View', 'CA', '94043', 1, 1);
+('25 Adeola Odeku Street', 'Lagos', 'Lagos', '101241', 1, 1),
+('44 Stanley Avenue', 'Johannesburg', 'Gauteng', '2092', 2, 1),
+('Mama Ngina Street', 'Nairobi', NULL, '00100', 3, 1),
+('24 Oxford Street', 'Accra', 'Greater Accra', 'GA1', 4, 1),
+('15 Nile Street', 'Cairo', 'Cairo Governorate', '11511', 5, 1),
+('22 Bole Road', 'Addis Ababa', NULL, '1000', 6, 2),
+('Avenue Mohammed V', 'Casablanca', NULL, '20000', 7, 1),
+('Rue de la République', 'Dakar', NULL, '12500', 8, 1),
+('Ohio Street', 'Dar es Salaam', NULL, '14110', 9, 3),
+('7 Acacia Avenue', 'Kampala', NULL, '256', 10, 1);
 
 -- Select with ORDER BY
 SELECT * FROM address ORDER BY city ASC;
@@ -92,15 +98,15 @@ CREATE TABLE customer (
     is_active BOOLEAN DEFAULT TRUE
 );
 
--- Insert realistic customer data
+-- Insert African customer data
 INSERT INTO customer (first_name, last_name, email, phone_number, date_of_birth, last_login, is_active)
 VALUES 
-('Emily', 'Johnson', 'emily.johnson@example.com', '+12125551234', '1985-04-12', '2023-11-15 09:23:45', TRUE),
-('Michael', 'Chen', 'michael.chen@example.com', '+14165559876', '1992-08-25', '2023-11-14 14:12:33', TRUE),
-('Sophia', 'Martinez', 'sophia.martinez@example.com', '+442071234567', '1978-11-03', '2023-11-10 18:45:21', TRUE),
-('James', 'Wilson', 'james.wilson@example.com', '+61398765432', '1990-02-19', '2023-11-12 11:05:17', FALSE),
-('Olivia', 'Tanaka', 'olivia.tanaka@example.com', '+81301234567', '1988-07-30', '2023-11-15 16:30:45', TRUE),
-('William', 'Brown', 'william.brown@example.com', '+14165551234', '1975-12-08', '2023-11-11 10:15:22', TRUE);
+('Adebayo', 'Ogunlesi', 'adebayo.ogunlesi@example.com', '+2348012345678', '1985-04-12', '2023-11-15 09:23:45', TRUE),
+('Naledi', 'Moloi', 'naledi.moloi@example.com', '+27111234567', '1992-08-25', '2023-11-14 14:12:33', TRUE),
+('Wanjiru', 'Kamau', 'wanjiru.kamau@example.com', '+254712345678', '1978-11-03', '2023-11-10 18:45:21', TRUE),
+('Kwame', 'Asante', 'kwame.asante@example.com', '+233241234567', '1990-02-19', '2023-11-12 11:05:17', FALSE),
+('Amina', 'Diallo', 'amina.diallo@example.com', '+221771234567', '1988-07-30', '2023-11-15 16:30:45', TRUE),
+('Thando', 'Mbeki', 'thando.mbeki@example.com', '+27721234567', '1975-12-08', '2023-11-11 10:15:22', TRUE);
 
 -- Select with LIMIT
 SELECT * FROM customer LIMIT 3;
@@ -123,13 +129,13 @@ INSERT INTO customer_address (customer_id, address_id, is_default)
 VALUES 
 (1, 1, TRUE),
 (2, 2, TRUE),
-(3, 4, TRUE),
-(4, 3, TRUE),
-(5, 3, TRUE),
-(6, 7, TRUE),
-(1, 5, FALSE),
+(3, 3, TRUE),
+(4, 4, TRUE),
+(5, 8, TRUE),
+(6, 2, TRUE),
+(1, 9, FALSE),
 (2, 6, FALSE),
-(3, 6, FALSE);
+(3, 10, FALSE);
 
 -- Select with JOIN
 SELECT c.first_name, c.last_name, a.street_address, a.city, a.postal_code, co.country_name
@@ -151,15 +157,17 @@ CREATE TABLE author (
     biography TEXT
 );
 
--- Insert realistic author data
+-- Insert African author data
 INSERT INTO author (first_name, last_name, date_of_birth, date_of_death, nationality, biography)
 VALUES 
-('George', 'Orwell', '1903-06-25', '1950-01-21', 'British', 'Eric Arthur Blair, better known by his pen name George Orwell, was an English novelist, essayist, journalist, and critic.'),
-('Jane', 'Austen', '1775-12-16', '1817-07-18', 'British', 'Jane Austen was an English novelist known primarily for her six major novels.'),
-('Haruki', 'Murakami', '1949-01-12', NULL, 'Japanese', 'Haruki Murakami is a Japanese writer. His novels, essays, and short stories have been bestsellers in Japan and internationally.'),
-('Toni', 'Morrison', '1931-02-18', '2019-08-05', 'American', 'Toni Morrison was an American novelist, essayist, book editor, and college professor.'),
-('Gabriel', 'García Márquez', '1927-03-06', '2014-04-17', 'Colombian', 'Gabriel García Márquez was a Colombian novelist, short-story writer, screenwriter, and journalist.'),
-('Margaret', 'Atwood', '1939-11-18', NULL, 'Canadian', 'Margaret Atwood is a Canadian poet, novelist, literary critic, essayist, and environmental activist.');
+('Chinua', 'Achebe', '1930-11-16', '2013-03-21', 'Nigerian', 'Chinua Achebe was a Nigerian novelist, poet, and critic who is regarded as the dominant figure of modern African literature.'),
+('Ngũgĩ wa', 'Thiong''o', '1938-01-05', NULL, 'Kenyan', 'Ngũgĩ wa Thiong''o is a Kenyan writer and academic who writes primarily in Gikuyu and English.'),
+('Nadine', 'Gordimer', '1923-11-20', '2014-07-13', 'South African', 'Nadine Gordimer was a South African writer and political activist who received the Nobel Prize in Literature in 1991.'),
+('Wole', 'Soyinka', '1934-07-13', NULL, 'Nigerian', 'Wole Soyinka is a Nigerian playwright, poet, and essayist who won the Nobel Prize in Literature in 1986.'),
+('Buchi', 'Emecheta', '1944-07-21', '2017-01-25', 'Nigerian', 'Buchi Emecheta was a Nigerian novelist who wrote about women''s experiences in patriarchal cultures.'),
+('Tsitsi', 'Dangarembga', '1959-02-04', NULL, 'Zimbabwean', 'Tsitsi Dangarembga is a Zimbabwean novelist, playwright, and filmmaker best known for her novel "Nervous Conditions".'),
+('Alaa', 'Al Aswany', '1957-05-26', NULL, 'Egyptian', 'Alaa Al Aswany is an Egyptian writer best known for his novel "The Yacoubian Building".'),
+('Mariama', 'Bâ', '1929-04-17', '1981-08-17', 'Senegalese', 'Mariama Bâ was a Senegalese author and feminist who wrote in French.');
 
 -- Select with WHERE
 SELECT * FROM author WHERE date_of_death IS NULL;
@@ -173,17 +181,17 @@ CREATE TABLE book_language (
     language_code VARCHAR(5) NOT NULL
 );
 
--- Insert comprehensive language data
+-- Insert comprehensive language data including African languages
 INSERT INTO book_language (language_name, language_code)
 VALUES 
 ('English', 'en'),
 ('French', 'fr'),
-('Spanish', 'es'),
-('German', 'de'),
-('Japanese', 'ja'),
-('Chinese', 'zh'),
-('Russian', 'ru'),
-('Arabic', 'ar');
+('Arabic', 'ar'),
+('Swahili', 'sw'),
+('Yoruba', 'yo'),
+('Zulu', 'zu'),
+('Amharic', 'am'),
+('Hausa', 'ha');
 
 -- Select all
 SELECT * FROM book_language;
@@ -201,18 +209,18 @@ CREATE TABLE publisher (
     founding_year INT
 );
 
--- Insert realistic publisher data
+-- Insert African publisher data
 INSERT INTO publisher (name, address, phone, email, website, founding_year)
 VALUES 
-('Penguin Random House', '1745 Broadway, New York, NY 10019', '+12127824500', 'contact@penguinrandomhouse.com', 'https://www.penguinrandomhouse.com', 2013),
-('HarperCollins', '195 Broadway, New York, NY 10007', '+12102072000', 'contact@harpercollins.com', 'https://www.harpercollins.com', 1989),
-('Simon & Schuster', '1230 Avenue of the Americas, New York, NY 10020', '+12126987000', 'info@simonandschuster.com', 'https://www.simonandschuster.com', 1924),
-('Hachette Livre', '43 Quai de Grenelle, 75015 Paris, France', '+33143928000', 'contact@hachette-livre.fr', 'https://www.hachette.com', 1826),
-('Macmillan Publishers', '120 Broadway, New York, NY 10271', '+12122461200', 'press@macmillan.com', 'https://us.macmillan.com', 1843),
-('Kodansha', '2-12-21 Otowa, Bunkyo, Tokyo 112-8001, Japan', '+81353957000', 'international@kodansha.co.jp', 'https://www.kodansha.co.jp', 1909);
+('Cassava Republic Press', '1 Adebola Street, Lagos, Nigeria', '+23414480355', 'info@cassavarepublic.biz', 'https://cassavarepublic.biz', 2006),
+('Kwela Books', 'PO Box 6525, Roggebaai, Cape Town, South Africa', '+27214261104', 'info@kwela.com', 'https://www.kwela.com', 1994),
+('East African Educational Publishers', 'Marshalls Lane, Nairobi, Kenya', '+25420224077', 'info@eastafricanpublishers.com', 'https://eastafricanpublishers.com', 1965),
+('Sub-Saharan Publishers', 'PO Box 358, Legon, Ghana', '+233302500396', 'sub-saharan@ighmail.com', NULL, 1992),
+('African Books Collective', 'PO Box 721, Oxford OX1 9EN, UK', '+441865726686', 'orders@africanbookscollective.com', 'https://www.africanbookscollective.com', 1985),
+('Kachifo Limited', '8 Norman Williams Street, Lagos, Nigeria', '+23417002345', 'hello@kachifo.com', 'https://kachifo.com', 2004);
 
 -- Select using pattern
-SELECT * FROM publisher WHERE name LIKE '%Random%' OR name LIKE '%Penguin%';
+SELECT * FROM publisher WHERE name LIKE '%African%' OR name LIKE '%Books%';
 
 -- ============================================
 -- TABLE: book
@@ -232,22 +240,22 @@ CREATE TABLE book (
     cover_image VARCHAR(255),
     FOREIGN KEY (language_id) REFERENCES book_language(language_id),
     FOREIGN KEY (publisher_id) REFERENCES publisher(publisher_id),
-    CHECK (publication_year > 0 AND publication_year <= YEAR(CURRENT_DATE)),
+    CHECK (publication_year > 0 AND publication_year <= 2100),
     CHECK (price > 0),
     CHECK (stock_quantity >= 0)
 );
 
--- Insert realistic book data with more details
+-- Insert African literature book data
 INSERT INTO book (title, publication_year, isbn, language_id, publisher_id, price, stock_quantity, pages, edition, description)
 VALUES 
-('1984', 1949, '978-0-452-28423-4', 1, 1, 12.99, 150, 328, 1, 'A dystopian social science fiction novel and cautionary tale.'),
-('Pride and Prejudice', 1813, '978-1-5011-7801-3', 1, 2, 9.99, 200, 279, 3, 'A romantic novel of manners set in early 19th century England.'),
-('Norwegian Wood', 1987, '978-0-09-944882-5', 5, 6, 15.50, 75, 296, 2, 'A nostalgic story of loss and burgeoning sexuality.'),
-('Beloved', 1987, '978-1-5011-7802-0', 1, 2, 14.95, 120, 324, 1, 'A novel about the legacy of slavery.'),
-('One Hundred Years of Solitude', 1967, '978-0-06-088328-7', 3, 2, 16.99, 90, 417, 2, 'A landmark magical realism novel.'),
-('The Handmaid''s Tale', 1985, '978-0-385-49081-3', 1, 1, 13.75, 180, 311, 1, 'A dystopian novel set in a totalitarian society.'),
-('Kafka on the Shore', 2002, '978-1-4000-7926-0', 5, 6, 17.25, 65, 505, 1, 'A metaphysical mind-bender of a novel.'),
-('To Kill a Mockingbird', 1960, '978-0-06-112008-4', 1, 2, 11.50, 220, 281, 1, 'A novel about racial injustice in the American South.');
+('Things Fall Apart', 1958, '978-0-435-90526-4', 1, 1, 14.99, 200, 209, 1, 'Chinua Achebe''s masterpiece about the clash of traditional African culture and colonial influence.'),
+('Half of a Yellow Sun', 2006, '978-0-00-720028-3', 1, 1, 16.50, 150, 433, 2, 'Chimamanda Ngozi Adichie''s novel about the Nigeria-Biafra war.'),
+('Nervous Conditions', 1988, '978-0-9547023-6-5', 1, 2, 12.75, 120, 204, 1, 'Tsitsi Dangarembga''s groundbreaking coming-of-age story set in colonial Rhodesia.'),
+('The Yacoubian Building', 2002, '978-977-424-891-7', 3, 6, 15.25, 90, 254, 1, 'Alaa Al Aswany''s novel about Egyptian society through the residents of a Cairo building.'),
+('So Long a Letter', 1979, '978-0-435-90650-6', 2, 5, 11.99, 110, 96, 1, 'Mariama Bâ''s epistolary novel about the struggles of women in Senegalese society.'),
+('Petals of Blood', 1977, '978-0-435-90580-6', 1, 3, 13.50, 85, 360, 1, 'Ngũgĩ wa Thiong''o''s novel about post-colonial disillusionment in Kenya.'),
+('The Joys of Motherhood', 1979, '978-0-435-90648-3', 1, 5, 12.25, 130, 224, 1, 'Buchi Emecheta''s novel about the struggles of a Nigerian woman in Lagos.'),
+('July''s People', 1981, '978-0-14-006140-6', 1, 2, 10.99, 95, 160, 1, 'Nadine Gordimer''s novel set during a fictional civil war in South Africa.');
 
 -- Select all
 SELECT * FROM book;
@@ -267,13 +275,13 @@ CREATE TABLE book_author (
 INSERT INTO book_author (book_id, author_id)
 VALUES 
 (1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 3),
-(8, NULL); -- This would normally have an author, but showing it can be NULL if needed
+(2, NULL), -- Chimamanda Ngozi Adichie (not in our author table yet)
+(3, 6),
+(4, 7),
+(5, 8),
+(6, 2),
+(7, 5),
+(8, 3);
 
 -- Select with JOIN
 SELECT b.title, CONCAT(a.first_name, ' ', a.last_name) AS author_name, b.price
@@ -294,14 +302,14 @@ CREATE TABLE shipping_method (
     is_active BOOLEAN DEFAULT TRUE
 );
 
--- Insert realistic shipping methods
+-- Insert realistic shipping methods for African context
 INSERT INTO shipping_method (method_name, description, cost, delivery_time_days, is_active)
 VALUES 
-('Standard', 'Regular shipping with tracking', 4.99, 5, TRUE),
-('Express', 'Faster shipping with priority handling', 9.99, 2, TRUE),
-('International', 'Overseas shipping', 14.99, 10, TRUE),
-('Free Shipping', 'Free standard shipping on orders over $50', 0.00, 7, TRUE),
-('Next Day', 'Guaranteed next business day delivery', 19.99, 1, TRUE),
+('Standard', 'Regular shipping with tracking', 5.99, 7, TRUE),
+('Express', 'Faster shipping with priority handling', 12.99, 3, TRUE),
+('Intra-Africa', 'Shipping within Africa', 9.99, 10, TRUE),
+('Free Shipping', 'Free standard shipping on orders over $50', 0.00, 10, TRUE),
+('Next Day', 'Guaranteed next business day delivery (major cities only)', 24.99, 1, TRUE),
 ('Local Pickup', 'Customer picks up from store', 0.00, NULL, TRUE);
 
 -- Select with ORDER BY
@@ -357,12 +365,12 @@ CREATE TABLE cust_order (
 -- Insert realistic order data
 INSERT INTO cust_order (customer_id, shipping_method_id, order_status_id, shipping_address_id, billing_address_id, total_amount, tax_amount, shipping_cost, notes)
 VALUES 
-(1, 1, 3, 1, 1, 37.97, 3.04, 4.99, 'Gift wrapping requested'),
-(2, 2, 4, 2, 2, 62.48, 5.00, 9.99, 'Deliver to front desk'),
-(3, 3, 2, 4, 6, 45.25, 3.62, 14.99, 'International shipping - customs form required'),
-(4, 4, 1, 3, 3, 89.97, 7.20, 0.00, NULL),
-(5, 1, 3, 3, 3, 32.50, 2.60, 4.99, 'Customer will call to confirm delivery time'),
-(6, 5, 5, 7, 7, 55.75, 4.46, 19.99, 'Order cancelled by customer');
+(1, 1, 3, 1, 1, 42.97, 3.44, 5.99, 'Gift wrapping requested'),
+(2, 2, 4, 2, 2, 67.48, 5.40, 12.99, 'Deliver to front desk'),
+(3, 3, 2, 3, 3, 50.25, 4.02, 9.99, 'Intra-Africa shipping'),
+(4, 4, 1, 4, 4, 94.97, 7.60, 0.00, NULL),
+(5, 1, 3, 8, 8, 37.50, 3.00, 5.99, 'Customer will call to confirm delivery time'),
+(6, 5, 5, 2, 2, 60.75, 4.86, 24.99, 'Order cancelled by customer');
 
 -- Select with JOIN
 SELECT 
@@ -398,21 +406,21 @@ CREATE TABLE order_line (
 -- Insert realistic order line items
 INSERT INTO order_line (order_id, book_id, quantity, price_per_unit, discount)
 VALUES 
-(1, 1, 1, 12.99, 0.00),
-(1, 2, 2, 9.99, 1.00),
-(2, 3, 1, 15.50, 0.50),
-(2, 4, 1, 14.95, 0.00),
-(2, 5, 1, 16.99, 0.00),
-(3, 6, 2, 13.75, 1.25),
-(3, 7, 1, 17.25, 0.00),
-(4, 8, 3, 11.50, 0.50),
-(4, 1, 2, 12.99, 1.00),
-(5, 2, 1, 9.99, 0.00),
-(5, 4, 1, 14.95, 0.00),
-(6, 5, 1, 16.99, 0.00),
-(6, 6, 1, 13.75, 0.00),
-(6, 7, 1, 17.25, 0.00),
-(6, 8, 1, 11.50, 0.00);
+(1, 1, 1, 14.99, 0.00),
+(1, 2, 2, 16.50, 1.00),
+(2, 3, 1, 12.75, 0.50),
+(2, 4, 1, 15.25, 0.00),
+(2, 5, 1, 11.99, 0.00),
+(3, 6, 2, 13.50, 1.25),
+(3, 7, 1, 12.25, 0.00),
+(4, 8, 3, 10.99, 0.50),
+(4, 1, 2, 14.99, 1.00),
+(5, 2, 1, 16.50, 0.00),
+(5, 4, 1, 15.25, 0.00),
+(6, 5, 1, 11.99, 0.00),
+(6, 6, 1, 13.50, 0.00),
+(6, 7, 1, 12.25, 0.00),
+(6, 8, 1, 10.99, 0.00);
 
 -- Select with JOIN
 SELECT 
@@ -469,3 +477,31 @@ JOIN cust_order o ON oh.order_id = o.order_id
 JOIN order_status os ON oh.status_id = os.order_status_id
 WHERE o.order_id = 1
 ORDER BY oh.status_change_date;
+
+-- ============================================
+-- TRIGGERS for validation
+-- ============================================
+DELIMITER //
+CREATE TRIGGER check_publication_year
+BEFORE INSERT ON book
+FOR EACH ROW
+BEGIN
+    IF NEW.publication_year > YEAR(CURRENT_DATE) THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Publication year cannot be in the future';
+    END IF;
+END//
+DELIMITER ;
+
+-- Create similar trigger for UPDATE
+DELIMITER //
+CREATE TRIGGER check_publication_year_update
+BEFORE UPDATE ON book
+FOR EACH ROW
+BEGIN
+    IF NEW.publication_year > YEAR(CURRENT_DATE) THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Publication year cannot be in the future';
+    END IF;
+END//
+DELIMITER ;
