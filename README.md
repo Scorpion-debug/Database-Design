@@ -1,3 +1,5 @@
+![Entity Relationship Diagram](./ERD.png)
+
 # Bookstore Database Design & Programming with SQL
 
 This project involves creating a relational MySQL database for a **Bookstore**. The database includes tables for managing books, authors, customers, orders, shipping, and other essential operations of the bookstore. Additionally, GitHub Actions is used to automate testing of the SQL scripts.
