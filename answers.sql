@@ -1,8 +1,7 @@
 -- ============================================
 -- DATABASE CREATION
 -- ============================================
-DROP DATABASE IF EXISTS bookstore;
-CREATE DATABASE bookstore;
+CREATE DATABASE IF NOT EXISTS bookstore;
 USE bookstore;
 
 -- ============================================
@@ -223,7 +222,7 @@ CREATE TABLE book (
     cover_image VARCHAR(255),
     FOREIGN KEY (language_id) REFERENCES book_language(language_id),
     FOREIGN KEY (publisher_id) REFERENCES publisher(publisher_id),
-    CHECK (publication_year > 0 AND publication_year <= YEAR(CURRENT_DATE)),
+    CHECK (publication_year > 0),
     CHECK (price > 0),
     CHECK (stock_quantity >= 0)
 );
@@ -419,7 +418,7 @@ CREATE TRIGGER check_publication_year
 BEFORE INSERT ON book
 FOR EACH ROW
 BEGIN
-    IF NEW.publication_year > YEAR(CURRENT_DATE) THEN
+    IF NEW.publication_year > YEAR(CURRENT_DATE()) THEN
         SIGNAL SQLSTATE '45000' 
         SET MESSAGE_TEXT = 'Publication year cannot be in the future';
     END IF;
@@ -429,7 +428,7 @@ CREATE TRIGGER check_publication_year_update
 BEFORE UPDATE ON book
 FOR EACH ROW
 BEGIN
-    IF NEW.publication_year > YEAR(CURRENT_DATE) THEN
+    IF NEW.publication_year > YEAR(CURRENT_DATE()) THEN
         SIGNAL SQLSTATE '45000' 
         SET MESSAGE_TEXT = 'Publication year cannot be in the future';
     END IF;
@@ -441,7 +440,7 @@ DELIMITER ;
 -- Create roles and users for secure access
 -- ============================================
 -- Create roles
-CREATE ROLE 'admin_role', 'employee_role', 'customer_role';
+CREATE ROLE IF NOT EXISTS 'admin_role', 'employee_role', 'customer_role';
 
 -- Grant privileges to roles
 GRANT ALL ON bookstore.* TO 'admin_role';
@@ -462,9 +461,9 @@ GRANT SELECT ON bookstore.author TO 'customer_role';
 GRANT SELECT ON bookstore.shipping_method TO 'customer_role';
 
 -- Create users
-CREATE USER 'admin_user'@'localhost' IDENTIFIED BY 'AdminPass123!';
-CREATE USER 'employee_user'@'localhost' IDENTIFIED BY 'EmployeePass456!';
-CREATE USER 'customer_user'@'localhost' IDENTIFIED BY 'CustomerPass789!';
+CREATE USER IF NOT EXISTS 'admin_user'@'localhost' IDENTIFIED BY 'AdminPass123!';
+CREATE USER IF NOT EXISTS 'employee_user'@'localhost' IDENTIFIED BY 'EmployeePass456!';
+CREATE USER IF NOT EXISTS 'customer_user'@'localhost' IDENTIFIED BY 'CustomerPass789!';
 
 -- Assign roles to users
 GRANT 'admin_role' TO 'admin_user'@'localhost';
